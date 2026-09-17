@@ -1,4 +1,4 @@
-# plexRadarrMaintenance
+# PlexRadarrMaintenance
 
 Maintenance de la bibliothèque **Plex / Radarr** :
 
