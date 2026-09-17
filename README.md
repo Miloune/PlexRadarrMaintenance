@@ -22,7 +22,10 @@ Aucun fichier n'est supprimé directement par le script : un film sans fiche Rad
 ### Installation
 
 ```bash
-cd /opt/script/plexRadarrMaintenance
+# Récupérer le projet (repo privé : SSH nécessite une clé configurée)
+sudo mkdir -p /opt/script && sudo chown "$USER" /opt/script
+git clone git@github.com:Miloune/PlexRadarrMaintenance.git /opt/script/PlexRadarrMaintenance
+cd /opt/script/PlexRadarrMaintenance
 
 # Debian / Ubuntu : le module venv est fourni à part
 sudo apt install -y python3-venv
@@ -35,6 +38,9 @@ python3 -m venv .venv
 # Vérification
 .venv/bin/python plexRadarrMaintenance.py --help
 ```
+
+> En HTTPS, remplacer l'URL par
+> `https://github.com/Miloune/PlexRadarrMaintenance.git` (token requis pour un repo privé).
 
 > Toutes les commandes passent par `.venv/bin/python` : rien n'est installé au niveau
 > global, donc aucun conflit avec les autres scripts ou paquets Python de la machine.
@@ -92,16 +98,16 @@ Utiliser le Python du venv et des chemins absolus :
 
 ```cron
 # Purge hebdomadaire : dimanche 4h, avec scan Plex et vidage de corbeille
-0 4 * * 0  /opt/script/plexRadarrMaintenance/.venv/bin/python /opt/script/plexRadarrMaintenance/plexRadarrMaintenance.py --apply --refresh-plex --empty-trash
+0 4 * * 0  /opt/script/PlexRadarrMaintenance/.venv/bin/python /opt/script/PlexRadarrMaintenance/plexRadarrMaintenance.py --apply --refresh-plex --empty-trash
 
 # Vidage de la corbeille Plex : lundi 4h
-0 4 * * 1  /opt/script/plexRadarrMaintenance/.venv/bin/python /opt/script/plexRadarrMaintenance/plexRadarrMaintenance.py --empty-trash
+0 4 * * 1  /opt/script/PlexRadarrMaintenance/.venv/bin/python /opt/script/PlexRadarrMaintenance/plexRadarrMaintenance.py --empty-trash
 
 # Contrôle des films sans correspondance : tous les jours à 9h
-0 9 * * *  /opt/script/plexRadarrMaintenance/.venv/bin/python /opt/script/plexRadarrMaintenance/plexRadarrMaintenance.py --check-unmatched
+0 9 * * *  /opt/script/PlexRadarrMaintenance/.venv/bin/python /opt/script/PlexRadarrMaintenance/plexRadarrMaintenance.py --check-unmatched
 
 # Dry-run mensuel : le 1er à 8h
-0 8 1 * *  /opt/script/plexRadarrMaintenance/.venv/bin/python /opt/script/plexRadarrMaintenance/plexRadarrMaintenance.py
+0 8 1 * *  /opt/script/PlexRadarrMaintenance/.venv/bin/python /opt/script/PlexRadarrMaintenance/plexRadarrMaintenance.py
 ```
 
 ## Variables `.env`
